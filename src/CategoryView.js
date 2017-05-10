@@ -17,7 +17,8 @@ class CategoryView extends Component {
       categories: [],
       loading: true,
       parentCategory: null,
-      categoryName: ""
+      categoryName: "",
+      modalOpen: false
     }
   }
 
@@ -29,9 +30,19 @@ class CategoryView extends Component {
     return $
       .getJSON(`${process.env.REACT_APP_URL}/category`)
       .then((data) => {
-        console.log(data)
-        this.setState({categories: data});
+        this.setState({categories: data, loading: false});
       });
+  }
+
+  refreshView() {
+    this.setState({
+      categories: [],
+      loading: true,
+      parentCategory: null,
+      categoryName: "",
+      modalOpen: false
+    })
+    this.CategoryList()
   }
 
   showModal() {
@@ -50,6 +61,15 @@ class CategoryView extends Component {
     event.preventDefault();
     //TODO send the category
 
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        contentType: "application/json",
+        url: `${process.env.REACT_APP_URL}/category`,
+        data: JSON.stringify({name:categoryName, parent_id: parentId})
+      }).then((data, status, xhr) => {
+        this.refreshView()
+    })
   }
 
   handleChange(event) {
