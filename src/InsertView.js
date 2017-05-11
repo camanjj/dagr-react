@@ -22,7 +22,7 @@ class InsertView extends Component {
         return $.getJSON(`${process.env.REACT_APP_URL}/dagr`)
       .then((data) => {
         console.log(data)
-        this.setState({ categories: data, loading: false });
+        this.setState({ dagrs: data, loading: false });
       });
   }
 
@@ -56,7 +56,7 @@ class InsertView extends Component {
 
 
         <h2>Dagrs</h2>
-        <BootstrapTable data={[]} striped={true} hover pagination search>
+        <BootstrapTable data={this.state.dagrs} striped={true} hover pagination search>
           <TableHeaderColumn dataField="id" isKey hidden>Category Id</TableHeaderColumn>
           <TableHeaderColumn dataField="file_name">File Name</TableHeaderColumn>
           <TableHeaderColumn dataField="file_alias">Alias</TableHeaderColumn>
