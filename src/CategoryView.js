@@ -85,12 +85,16 @@ class CategoryView extends Component {
   }
 
   createCategory(event) {
-    const categoryName = this.state.categoryName;
-    const parentId = this.state.parentCategory.id || null
-    console.log(categoryName)
-    console.log(parentId)
     event.preventDefault();
-    //TODO send the category
+    const categoryName = this.state.categoryName;
+
+    var payload = {
+      name: categoryName
+    }
+
+    if (this.state.parentCategory) {
+      payload.parent_id = this.state.parentCategory.id
+    }
 
     $
       .ajax({
@@ -98,7 +102,7 @@ class CategoryView extends Component {
       dataType: 'json',
       contentType: "application/json",
       url: `${process.env.REACT_APP_URL}/category`,
-      data: JSON.stringify({name: categoryName, parent_id: parentId})
+      data: JSON.stringify(payload)
     })
       .then((data, status, xhr) => {
         this.refreshView()
@@ -128,7 +132,7 @@ class CategoryView extends Component {
       type: 'POST',
       dataType: 'json',
       contentType: "application/json",
-      url: `${process.env.REACT_APP_URL}/category/${this.state.selectedCategory.id}/dagr`,
+      url: `${process.env.REACT_APP_URL}/category/dagr/remove`,
       data: JSON.stringify({dagrId: this.state.selectedDagr.id})
     })
       .then((data, status, xhr) => {
@@ -189,7 +193,8 @@ class CategoryView extends Component {
 
     const selectDagrRowProp = {
       mode: 'radio',
-      clickToSelect: true
+      clickToSelect: true,
+      onSelect: (row, isSelected, e) => { if (isSelected) this.setState({selectedDagr: row}); console.log(row) }
     }
 
     // map the parent Id to the parent's name
@@ -223,8 +228,6 @@ class CategoryView extends Component {
               </BootstrapTable>
               <div className="btn-group" role="group" aria-label="...">
                 <button type="button" className='btn btn-primary' onClick={this.showModal}>+Category</button>
-                {/*<button type="button" className='btn btn-success' onClick={''}>View Dagrs for category</button>*/}
-                {/*<button type="button" className='btn btn-info' onClick={''}>Add Dagr to Selected Category</button>*/}
               </div>
             </div>
             <div className="col-xs-6">

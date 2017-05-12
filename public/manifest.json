@@ -12,6 +12,7 @@
   "permissions": [
     "activeTab",
     "tabs",
+    "file:///*",
     "https://ajax.googleapis.com/"
   ],
     "content_scripts": [{

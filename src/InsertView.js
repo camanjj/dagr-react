@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Dropzone from 'react-dropzone'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import $ from 'jquery';
 import { ProgressHUD, Wrapper } from "react-progress-hud";
@@ -46,6 +45,12 @@ class InsertView extends Component {
         })
     }
 
+    const formatPath = (cell, row) => {
+      var prefix = row.path.lastIndexOf('http', 0) === 0 ? "" : "file:///"
+      return <a href={prefix + row.path}> {cell} </a>
+
+    }
+
     return (
       <div>
         
@@ -59,8 +64,8 @@ class InsertView extends Component {
         <BootstrapTable data={this.state.dagrs} striped={true} hover pagination search>
           <TableHeaderColumn dataField="id" isKey hidden>Category Id</TableHeaderColumn>
           <TableHeaderColumn dataField="file_name">File Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="file_alias">Alias</TableHeaderColumn>
-          <TableHeaderColumn dataField="file_path">File Path</TableHeaderColumn>
+          <TableHeaderColumn dataField="alias">Alias</TableHeaderColumn>
+          <TableHeaderColumn dataField="path" dataFormat={formatPath} >File Path</TableHeaderColumn>
         </BootstrapTable>
 
         <button className='btn btn-primary' onClick={addCurrentTab}>
