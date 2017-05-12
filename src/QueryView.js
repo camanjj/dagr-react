@@ -92,7 +92,7 @@ export default class QueryView extends Component {
   
         <Modal
           isOpen={this.state.modalOpen}
-          contentLabel="Add Category"
+          contentLabel="Results"
           onRequestClose={closeModal}
           shouldCloseOnOverlayClick={true}>
           <div className="">
