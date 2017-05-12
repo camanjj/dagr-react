@@ -143,7 +143,7 @@ class CategoryView extends Component {
 
   createCustomDeleteButton = (onClick) => {
     return (
-      <button type="button" className="btn btn-warning" onClick={ () => this.handleDeleteButtonClick(onClick) }>Remove item form Category</button>
+      <button type="button" className="btn btn-warning" onClick={ () => this.handleDeleteButtonClick(onClick) }>Remove item from Category</button>
     );
   }
 
